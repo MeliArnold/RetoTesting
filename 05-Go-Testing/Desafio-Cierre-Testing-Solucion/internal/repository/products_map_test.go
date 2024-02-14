@@ -8,19 +8,25 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// Tests for ProductsMap - SearchProducts
+// TestProductsMap_SearchProducts is a test function that tests the SearchProducts method of the ProductsMap type.
+// It runs a series of test cases to verify the correctness of the method implementation.
 func TestProductsMap_SearchProducts(t *testing.T) {
+
+	// devuelve una simulacion de la BD
 	type arrange struct {
 		db func() map[int]internal.Product
 	}
-	type input struct{
+
+	type input struct {
 		query internal.ProductQuery
 	}
+
 	type output struct {
 		p      map[int]internal.Product
 		err    error
 		errMsg string
 	}
+
 	type testCase struct {
 		name    string
 		arrange arrange
@@ -38,7 +44,7 @@ func TestProductsMap_SearchProducts(t *testing.T) {
 				db: func() map[int]internal.Product {
 					return map[int]internal.Product{
 						1: {
-							Id:    1,
+							Id: 1,
 							ProductAttributes: internal.ProductAttributes{
 								Description: "Product 1",
 								Price:       100,
@@ -46,7 +52,7 @@ func TestProductsMap_SearchProducts(t *testing.T) {
 							},
 						},
 						2: {
-							Id:    2,
+							Id: 2,
 							ProductAttributes: internal.ProductAttributes{
 								Description: "Product 2",
 								Price:       200,
@@ -62,7 +68,7 @@ func TestProductsMap_SearchProducts(t *testing.T) {
 			output: output{
 				p: map[int]internal.Product{
 					1: {
-						Id:    1,
+						Id: 1,
 						ProductAttributes: internal.ProductAttributes{
 							Description: "Product 1",
 							Price:       100,
@@ -70,7 +76,7 @@ func TestProductsMap_SearchProducts(t *testing.T) {
 						},
 					},
 					2: {
-						Id:    2,
+						Id: 2,
 						ProductAttributes: internal.ProductAttributes{
 							Description: "Product 2",
 							Price:       200,
@@ -78,7 +84,7 @@ func TestProductsMap_SearchProducts(t *testing.T) {
 						},
 					},
 				},
-				err: nil,
+				err:    nil,
 				errMsg: "",
 			},
 		},
@@ -94,8 +100,8 @@ func TestProductsMap_SearchProducts(t *testing.T) {
 				query: internal.ProductQuery{},
 			},
 			output: output{
-				p: make(map[int]internal.Product),
-				err: nil,
+				p:      make(map[int]internal.Product),
+				err:    nil,
 				errMsg: "",
 			},
 		},
@@ -106,7 +112,7 @@ func TestProductsMap_SearchProducts(t *testing.T) {
 				db: func() map[int]internal.Product {
 					return map[int]internal.Product{
 						1: {
-							Id:    1,
+							Id: 1,
 							ProductAttributes: internal.ProductAttributes{
 								Description: "Product 1",
 								Price:       100,
@@ -114,7 +120,7 @@ func TestProductsMap_SearchProducts(t *testing.T) {
 							},
 						},
 						2: {
-							Id:    2,
+							Id: 2,
 							ProductAttributes: internal.ProductAttributes{
 								Description: "Product 2",
 								Price:       200,
@@ -132,7 +138,7 @@ func TestProductsMap_SearchProducts(t *testing.T) {
 			output: output{
 				p: map[int]internal.Product{
 					1: {
-						Id:    1,
+						Id: 1,
 						ProductAttributes: internal.ProductAttributes{
 							Description: "Product 1",
 							Price:       100,
@@ -140,7 +146,7 @@ func TestProductsMap_SearchProducts(t *testing.T) {
 						},
 					},
 				},
-				err: nil,
+				err:    nil,
 				errMsg: "",
 			},
 		},
@@ -151,7 +157,7 @@ func TestProductsMap_SearchProducts(t *testing.T) {
 				db: func() map[int]internal.Product {
 					return map[int]internal.Product{
 						1: {
-							Id:    1,
+							Id: 1,
 							ProductAttributes: internal.ProductAttributes{
 								Description: "Product 1",
 								Price:       100,
@@ -159,7 +165,7 @@ func TestProductsMap_SearchProducts(t *testing.T) {
 							},
 						},
 						2: {
-							Id:    2,
+							Id: 2,
 							ProductAttributes: internal.ProductAttributes{
 								Description: "Product 2",
 								Price:       200,
@@ -175,8 +181,8 @@ func TestProductsMap_SearchProducts(t *testing.T) {
 				},
 			},
 			output: output{
-				p: map[int]internal.Product{},
-				err: nil,
+				p:      map[int]internal.Product{},
+				err:    nil,
 				errMsg: "",
 			},
 		},
@@ -189,7 +195,7 @@ func TestProductsMap_SearchProducts(t *testing.T) {
 			// - db
 			db := tc.arrange.db()
 			rp := repository.NewProductsMap(db)
-			
+
 			// act
 			p, err := rp.SearchProducts(tc.input.query)
 
